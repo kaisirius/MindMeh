@@ -1,1 +1,1 @@
-{"root":["./src/index.ts"],"version":"5.9.3"}
+{"root":["./src/index.ts","./src/db/db.ts","./src/db/schemas/brain.ts","./src/db/schemas/content.ts","./src/db/schemas/image.ts","./src/db/schemas/user.ts","./src/utils/zodvalidator.ts"],"version":"5.9.3"}
