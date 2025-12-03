@@ -21,6 +21,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const zod_1 = __importDefault(require("zod"));
 const db_1 = require("./db/db");
 const zodValidator_1 = __importDefault(require("./utils/zodValidator"));
+const auth_1 = __importDefault(require("./middleware/auth"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
@@ -111,8 +112,22 @@ app.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         });
     }
 }));
+app.get("/", auth_1.default, (req, res) => {
+    res.status(200).json({
+        message: "Hello"
+    });
+});
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
+    if (!process.env.DB_URL) {
+        throw new Error("Missing DB URL in environment variables");
+    }
+    if (!process.env.JWT_SECRET) {
+        throw new Error("Missing JWT SECRET KEY in environment variables");
+    }
+    if (!process.env.PORT) {
+        throw new Error("Missing PORT in environment variables");
+    }
     yield mongoose_1.default.connect(process.env.DB_URL);
-    app.listen(process.env.PORT || 3000, () => console.log(`MindMeh backend running on port ${process.env.PORT || 3000}`));
+    app.listen(Number(process.env.PORT), () => console.log(`MindMeh backend running on port ${Number(process.env.PORT)}`));
 });
 main();

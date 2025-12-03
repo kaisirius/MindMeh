@@ -9,6 +9,9 @@ import { Express, Request, Response } from "express"
 
 import { userModel } from "./db/db"
 import zodValidator from "./utils/zodValidator"
+import signupReqBody from "./types/T_signupReq"
+import signinReqBody from "./types/T_signinReq"
+import auth from "./middleware/auth"
 
 dotenv.config();
 
@@ -16,7 +19,7 @@ const app: Express = express();
 app.use(cors());
 app.use(express.json());
 
-app.post("/signup", async (req: Request, res: Response) => {
+app.post("/signup", async (req: Request<{}, {}, signupReqBody >, res: Response) => {
   // zod validation
   const checkParsing = zodValidator(req);
 
@@ -51,7 +54,7 @@ app.post("/signup", async (req: Request, res: Response) => {
   }
 });
 
-app.post("/signin", async (req: Request, res: Response) => {
+app.post("/signin", async (req: Request<{}, {}, signinReqBody>, res: Response) => {
   const inpSchema = zod.object({
     email: zod.email(),
     password: zod.string().min(6).regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).+$/, 
@@ -62,7 +65,7 @@ app.post("/signin", async (req: Request, res: Response) => {
   })
   type inpSchemaType = zod.infer<typeof inpSchema>;
   const checkParsing: ZodSafeParseResult<inpSchemaType> = inpSchema.safeParse(req.body);
-  
+
   if(checkParsing.success) {
     // check in db
     try {
@@ -109,9 +112,24 @@ app.post("/signin", async (req: Request, res: Response) => {
 });
 
 
+app.get("/", auth, (req: Request, res: Response) => {
+  res.status(200).json({
+    message: "Hello"
+  })
+});
+
 const main = async () => {
-  await mongoose.connect(process.env.DB_URL as string);
-  app.listen(process.env.PORT || 3000, () => console.log(`MindMeh backend running on port ${process.env.PORT || 3000}`));
+  if(!process.env.DB_URL) {
+    throw new Error("Missing DB URL in environment variables");
+  }
+  if(!process.env.JWT_SECRET) {
+    throw new Error("Missing JWT SECRET KEY in environment variables");
+  }
+  if(!process.env.PORT) {
+    throw new Error("Missing PORT in environment variables");
+  }
+  await mongoose.connect(process.env.DB_URL);
+  app.listen(Number(process.env.PORT), () => console.log(`MindMeh backend running on port ${Number(process.env.PORT)}`));
 }
 
 main()
