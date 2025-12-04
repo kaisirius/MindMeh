@@ -1,12 +1,14 @@
 import { Request, Response, Router } from "express"
 import auth from "../../middleware/auth";
 import { brainModel, contentModel } from "../../db/db";
+import mongoose from "mongoose";
 const homeRouter = Router();
 
 homeRouter.get("/brains", auth, async (req: Request, res: Response) => {
   try{
+    const userId = new mongoose.Schema.Types.ObjectId(req.userId as string);
     const listOfBrains = await brainModel.find({
-      userId: req.userId
+      userId
     })
     res.status(200).json({
       listOfBrains
@@ -26,12 +28,14 @@ homeRouter.get("/brains/:hash", auth, async (req: Request, res: Response) => {
     const currentBrainId = await brainModel.findOne({
       hash
     })
-    const listOfContents = await contentModel.find({
-      brainId: currentBrainId
-    })
-    res.status(200).json({
-      listOfContents
-    })
+    if(currentBrainId) {
+      const listOfContents = await contentModel.find({
+        brainId: currentBrainId._id
+      })
+      res.status(200).json({
+        listOfContents
+      })
+    }
   } catch(e) {
     res.status(500).json({
       message: "Internal server error.",

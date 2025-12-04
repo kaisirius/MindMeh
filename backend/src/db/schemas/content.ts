@@ -15,7 +15,7 @@ const contentSchema = new Schema({
   },
   brainId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Brains'
+    ref: 'brains'
   } 
 });
 

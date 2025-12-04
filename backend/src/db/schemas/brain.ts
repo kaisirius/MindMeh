@@ -6,11 +6,11 @@ const brainSchema = new Schema({
   hash: String,
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Users'
+    ref: 'users'
   },
-  imageURL: {
+  imageId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Images'
+    ref: 'images'
   }
 })
 

@@ -5,11 +5,11 @@ import { Request, Response, Router } from "express"
 
 import { userModel } from "../../db/db"
 import zodValidator from "../../utils/zodValidator"
-import signupReqBody from "../../types/T_signupReq"
-import signinReqBody from "../../types/T_signinReq"
+import T_signupReqBody from "../../types/T_signupReq"
+import T_signinReqBody from "../../types/T_signinReq"
 const authRouter = Router();
 
-authRouter.post("/signup", async (req: Request<{}, {}, signupReqBody >, res: Response) => {
+authRouter.post("/signup", async (req: Request<{}, {}, T_signupReqBody>, res: Response) => {
   // zod validation
   const checkParsing = zodValidator(req);
 
@@ -44,7 +44,7 @@ authRouter.post("/signup", async (req: Request<{}, {}, signupReqBody >, res: Res
   }
 });
 
-authRouter.post("/signin", async (req: Request<{}, {}, signinReqBody>, res: Response) => {
+authRouter.post("/signin", async (req: Request<{}, {}, T_signinReqBody>, res: Response) => {
   const inpSchema = zod.object({
     email: zod.email(),
     password: zod.string().min(6).regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).+$/, 
@@ -67,7 +67,7 @@ authRouter.post("/signin", async (req: Request<{}, {}, signinReqBody>, res: Resp
         const storedHashedPass = existingUser.password;
         const passMatchCheck = await bcrypt.compare(req.body.password, storedHashedPass as string);
         if(passMatchCheck) {
-          const userId = existingUser._id.toString();
+          const userId = existingUser._id.toString(); 
           const token = jwt.sign({
             userId
           }, process.env.JWT_SECRET as string);

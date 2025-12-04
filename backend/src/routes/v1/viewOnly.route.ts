@@ -10,12 +10,14 @@ viewOnlyRouter.get("/brain/:hash", auth, async (req: Request, res:Response) => {
       const currentBrainId = await brainModel.findOne({
         hash
       })
-      const listOfContents = await contentModel.find({
-        brainId: currentBrainId
-      })
-      res.status(200).json({
-        listOfContents
-      })
+      if(currentBrainId) {
+        const listOfContents = await contentModel.find({
+          brainId: currentBrainId._id
+        })
+        res.status(200).json({
+          listOfContents
+        })
+      }
     } catch(e) {
       res.status(500).json({
         message: "Internal server error.",

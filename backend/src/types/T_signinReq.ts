@@ -1,4 +1,4 @@
-import signupReqBody from "./T_signupReq";
+import T_signupReqBody from "./T_signupReq";
 
-type signinReqBody = Pick<signupReqBody, 'email' | 'password'>;
-export default signinReqBody
+type T_signinReqBody = Pick<T_signupReqBody, 'email' | 'password'>;
+export default T_signinReqBody

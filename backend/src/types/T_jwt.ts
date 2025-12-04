@@ -1,5 +1,6 @@
 import jwt, { JwtPayload } from "jsonwebtoken"
-interface MyJwtPayload extends JwtPayload {
+import mongoose from "mongoose"
+interface T_JwtPayload extends JwtPayload {
   userId: string
 }
-export default MyJwtPayload
+export default T_JwtPayload
