@@ -40,11 +40,11 @@ const brainSchema = new mongoose_1.Schema({
     hash: String,
     userId: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: 'Users'
+        ref: 'users'
     },
-    imageURL: {
+    imageId: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: 'Images'
+        ref: 'images'
     }
 });
 exports.default = brainSchema;
