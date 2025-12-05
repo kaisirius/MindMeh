@@ -3,10 +3,10 @@ import jwt from "jsonwebtoken"
 import zod, {  ZodSafeParseResult } from "zod"
 import { Request, Response, Router } from "express"
 
-import { userModel } from "../../db/db"
-import zodValidator from "../../utils/zodValidator"
-import T_signupReqBody from "../../types/T_signupReq"
-import T_signinReqBody from "../../types/T_signinReq"
+import { userModel } from "../db/db"
+import zodValidator from "../utils/zodValidator"
+import T_signupReqBody from "../types/T_signupReq"
+import T_signinReqBody from "../types/T_signinReq"
 const authRouter = Router();
 
 authRouter.post("/signup", async (req: Request<{}, {}, T_signupReqBody>, res: Response) => {

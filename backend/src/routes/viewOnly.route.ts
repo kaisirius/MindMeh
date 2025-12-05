@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express"
-import auth from "../../middleware/auth"
-import { brainModel, contentModel } from "../../db/db";
+import auth from "../middleware/auth"
+import { brainModel, contentModel } from "../db/db";
 
 const viewOnlyRouter = Router();
 

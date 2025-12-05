@@ -4,7 +4,7 @@ import cors from "cors"
 import dotenv from "dotenv"
 import { Express } from "express"
 
-import mainRouter from "./routes/v1/main"
+import mainRouter from "./routes/main"
 
 dotenv.config();
 
