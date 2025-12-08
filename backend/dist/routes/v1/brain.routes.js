@@ -31,7 +31,7 @@ brainRouter.post("/brain", auth_1.default, (req, res) => __awaiter(void 0, void 
         const share = req.body.share;
         const imageId = new mongoose_1.default.Schema.Types.ObjectId(req.body.imageId);
         const hash = title + "-" + uuid_1.default.v4(); // unique uuid
-        const userId = new mongoose_1.default.Schema.Types.ObjectId(req.userId);
+        const userId = new mongoose_1.default.Types.ObjectId(req.userId);
         try {
             yield db_1.brainModel.create({
                 title,
@@ -57,7 +57,7 @@ brainRouter.post("/brain", auth_1.default, (req, res) => __awaiter(void 0, void 
     }
 }));
 brainRouter.delete("/brain/:hash", auth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const userId = new mongoose_1.default.Schema.Types.ObjectId(req.userId);
+    const userId = new mongoose_1.default.Types.ObjectId(req.userId);
     const hash = req.params.hash;
     try {
         const findBrain = yield db_1.brainModel.findOne({
@@ -89,7 +89,7 @@ brainRouter.delete("/brain/:hash", auth_1.default, (req, res) => __awaiter(void 
     }
 }));
 brainRouter.put("/brain/:hash", auth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const userId = new mongoose_1.default.Schema.Types.ObjectId(req.userId);
+    const userId = new mongoose_1.default.Types.ObjectId(req.userId);
     const hash = req.params.hash;
     const share = req.body.share;
     try {

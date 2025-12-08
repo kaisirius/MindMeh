@@ -10,8 +10,8 @@ const contentSchema = new Schema({
     default: 'other'
   },
   createdAt: {
-    type: Date,
-    default: Date.now  
+    type: String,
+    default: new Date().toISOString()  
   },
   brainId: {
     type: mongoose.Schema.Types.ObjectId,

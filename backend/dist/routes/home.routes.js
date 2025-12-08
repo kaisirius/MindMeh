@@ -19,7 +19,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const homeRouter = (0, express_1.Router)();
 homeRouter.get("/brains", auth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const userId = new mongoose_1.default.Schema.Types.ObjectId(req.userId);
+        const userId = new mongoose_1.default.Types.ObjectId(req.userId);
         const listOfBrains = yield db_1.brainModel.find({
             userId
         });
@@ -37,7 +37,7 @@ homeRouter.get("/brains", auth_1.default, (req, res) => __awaiter(void 0, void 0
 homeRouter.get("/brain/:hash", auth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const hash = req.params.hash;
     try {
-        const userId = new mongoose_1.default.Schema.Types.ObjectId(req.userId);
+        const userId = new mongoose_1.default.Types.ObjectId(req.userId);
         const currentBrainId = yield db_1.brainModel.findOne({
             hash,
             userId // check this else any user can access some other person's brain

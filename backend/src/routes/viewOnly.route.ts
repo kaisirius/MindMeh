@@ -1,14 +1,17 @@
 import { Request, Response, Router } from "express"
 import auth from "../middleware/auth"
 import { brainModel, contentModel } from "../db/db";
+import mongoose from "mongoose";
 
 const viewOnlyRouter = Router();
 
 viewOnlyRouter.get("/brain/:hash", auth, async (req: Request, res:Response) => {
   const hash = req.params.hash;
+  const userId = new mongoose.Types.ObjectId(req.userId);
     try{
       const currentBrainId = await brainModel.findOne({
-        hash
+        hash,
+        userId
       })
       if(currentBrainId) {
         const listOfContents = await contentModel.find({

@@ -15,12 +15,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const auth_1 = __importDefault(require("../middleware/auth"));
 const db_1 = require("../db/db");
+const mongoose_1 = __importDefault(require("mongoose"));
 const viewOnlyRouter = (0, express_1.Router)();
 viewOnlyRouter.get("/brain/:hash", auth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const hash = req.params.hash;
+    const userId = new mongoose_1.default.Types.ObjectId(req.userId);
     try {
         const currentBrainId = yield db_1.brainModel.findOne({
-            hash
+            hash,
+            userId
         });
         if (currentBrainId) {
             const listOfContents = yield db_1.contentModel.find({

@@ -44,8 +44,8 @@ const contentSchema = new mongoose_1.Schema({
         default: 'other'
     },
     createdAt: {
-        type: Date,
-        default: Date.now
+        type: String,
+        default: new Date().toISOString()
     },
     brainId: {
         type: mongoose_1.default.Schema.Types.ObjectId,

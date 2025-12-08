@@ -6,7 +6,7 @@ const homeRouter = Router();
 
 homeRouter.get("/brains", auth, async (req: Request, res: Response) => {
   try{
-    const userId = new mongoose.Schema.Types.ObjectId(req.userId as string);
+    const userId = new mongoose.Types.ObjectId(req.userId);
     const listOfBrains = await brainModel.find({
       userId
     })
@@ -25,7 +25,7 @@ homeRouter.get("/brains", auth, async (req: Request, res: Response) => {
 homeRouter.get("/brain/:hash", auth, async (req: Request, res: Response) => {
   const hash = req.params.hash;
   try{
-    const userId = new mongoose.Schema.Types.ObjectId(req.userId as string);
+    const userId = new mongoose.Types.ObjectId(req.userId);
     const currentBrainId = await brainModel.findOne({
       hash,
       userId // check this else any user can access some other person's brain

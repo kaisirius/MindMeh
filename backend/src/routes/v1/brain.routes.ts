@@ -23,7 +23,7 @@ brainRouter.post("/brain", auth, async (req: Request<{}, {}, T_postBrainReq>, re
     const share = req.body.share;
     const imageId = new mongoose.Schema.Types.ObjectId(req.body.imageId);
     const hash = title + "-" + uuid.v4(); // unique uuid
-    const userId = new mongoose.Schema.Types.ObjectId(req.userId as string);
+    const userId = new mongoose.Types.ObjectId(req.userId);
 
     try {
       await brainModel.create({
@@ -50,7 +50,7 @@ brainRouter.post("/brain", auth, async (req: Request<{}, {}, T_postBrainReq>, re
 });
 
 brainRouter.delete("/brain/:hash", auth, async (req: Request, res: Response) => {
-  const userId = new mongoose.Schema.Types.ObjectId(req.userId as string);
+  const userId = new mongoose.Types.ObjectId(req.userId);
   const hash = req.params.hash;
   try {
     const findBrain = await brainModel.findOne({
@@ -82,7 +82,7 @@ brainRouter.delete("/brain/:hash", auth, async (req: Request, res: Response) => 
 
 
 brainRouter.put("/brain/:hash", auth, async (req: Request<{hash: string}, {}, {share: boolean}>, res: Response) => {
-  const userId = new mongoose.Schema.Types.ObjectId(req.userId as string);
+  const userId = new mongoose.Types.ObjectId(req.userId);
   const hash = req.params.hash;
   const share = req.body.share;
   try {
