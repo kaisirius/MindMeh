@@ -112,4 +112,41 @@ brainRouter.put("/brain/:hash", auth, async (req: Request<{hash: string}, {}, {s
   }
 });
 
+
+brainRouter.get("/publicBrains", auth, async (req: Request, res: Response) => {
+  try{
+    const userId = new mongoose.Types.ObjectId(req.userId);
+    const listOfBrains = await brainModel.find({
+      userId,
+      share: true
+    })
+    res.status(200).json({
+      listOfBrains
+    })
+    } catch(e) {
+      res.status(500).json({
+        message: "Internal server error.",
+        error: e
+      })
+    }
+})
+
+brainRouter.get("/privateBrains", auth, async (req: Request, res: Response) => {
+  try{
+    const userId = new mongoose.Types.ObjectId(req.userId);
+    const listOfBrains = await brainModel.find({
+      userId,
+      share: false
+    })
+    res.status(200).json({
+      listOfBrains
+    })
+    } catch(e) {
+      res.status(500).json({
+        message: "Internal server error.",
+        error: e
+      })
+    }
+})
+
 export default brainRouter

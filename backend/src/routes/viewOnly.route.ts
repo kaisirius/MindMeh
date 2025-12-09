@@ -11,7 +11,7 @@ viewOnlyRouter.get("/brain/:hash", auth, async (req: Request, res:Response) => {
     try{
       const currentBrainId = await brainModel.findOne({
         hash,
-        userId
+        share: true
       })
       if(currentBrainId) {
         const listOfContents = await contentModel.find({
@@ -19,6 +19,10 @@ viewOnlyRouter.get("/brain/:hash", auth, async (req: Request, res:Response) => {
         })
         res.status(200).json({
           listOfContents
+        })
+      } else {
+        res.status(400).json({
+          message: "No such brain exists."
         })
       }
     } catch(e) {
