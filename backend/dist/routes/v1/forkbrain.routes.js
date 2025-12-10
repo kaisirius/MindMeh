@@ -34,12 +34,14 @@ forkBrainRouter.post("/fork/brain/:hash", auth_1.default, (req, res) => __awaite
             const share = true;
             const imageId = currentBrain.imageId;
             const userId = new mongoose_1.default.Types.ObjectId(req.userId);
+            const embedding = currentBrain.embedding;
             const newBrainForUser = yield db_1.brainModel.create({
                 title,
                 share,
                 hash,
                 userId,
-                imageId
+                imageId,
+                embedding
             });
             if (newBrainForUser) {
                 yield db_1.contentModel.insertMany(listOfContents.map(item => ({
