@@ -18,6 +18,7 @@ const zod_1 = __importDefault(require("zod"));
 const uuid_1 = __importDefault(require("uuid"));
 const auth_1 = __importDefault(require("../../middleware/auth"));
 const db_1 = require("../../db/db");
+const getVectorEmbeddings_1 = require("../../utils/getVectorEmbeddings");
 const brainRouter = (0, express_1.Router)();
 brainRouter.post("/brain", auth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const reqBodySchema = zod_1.default.object({
@@ -33,12 +34,14 @@ brainRouter.post("/brain", auth_1.default, (req, res) => __awaiter(void 0, void 
         const hash = title + "-" + uuid_1.default.v4(); // unique uuid
         const userId = new mongoose_1.default.Types.ObjectId(req.userId);
         try {
+            const embedding = yield (0, getVectorEmbeddings_1.getEmbedding)(title);
             yield db_1.brainModel.create({
                 title,
                 share,
                 hash,
                 userId,
-                imageId
+                imageId,
+                embedding
             });
             res.status(200).json({
                 hash
@@ -117,6 +120,42 @@ brainRouter.put("/brain/:hash", auth_1.default, (req, res) => __awaiter(void 0, 
     catch (e) {
         res.status(500).json({
             message: "Internal server error."
+        });
+    }
+}));
+brainRouter.get("/publicBrains", auth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = new mongoose_1.default.Types.ObjectId(req.userId);
+        const listOfBrains = yield db_1.brainModel.find({
+            userId,
+            share: true
+        });
+        res.status(200).json({
+            listOfBrains
+        });
+    }
+    catch (e) {
+        res.status(500).json({
+            message: "Internal server error.",
+            error: e
+        });
+    }
+}));
+brainRouter.get("/privateBrains", auth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = new mongoose_1.default.Types.ObjectId(req.userId);
+        const listOfBrains = yield db_1.brainModel.find({
+            userId,
+            share: false
+        });
+        res.status(200).json({
+            listOfBrains
+        });
+    }
+    catch (e) {
+        res.status(500).json({
+            message: "Internal server error.",
+            error: e
         });
     }
 }));

@@ -5,6 +5,7 @@ import uuid from "uuid"
 import auth from "../../middleware/auth";
 import { brainModel, contentModel } from "../../db/db";
 import T_postBrainReq from "../../types/T_postBrainReq";
+import { getEmbedding } from "../../utils/getVectorEmbeddings";
 
 const brainRouter = Router();
 
@@ -26,12 +27,14 @@ brainRouter.post("/brain", auth, async (req: Request<{}, {}, T_postBrainReq>, re
     const userId = new mongoose.Types.ObjectId(req.userId);
 
     try {
+      const embedding = await getEmbedding(title);
       await brainModel.create({
         title,
         share,
         hash,
         userId,
-        imageId
+        imageId,
+        embedding
       })
       res.status(200).json({
         hash

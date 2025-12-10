@@ -23,16 +23,19 @@ app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use(main_1.default);
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    if (!process.env.DB_URL) {
-        throw new Error("Missing DB URL in environment variables");
+    if (!process.env.MONGODB_URL) {
+        throw new Error("Missing DB URL in environment variables.");
     }
     if (!process.env.JWT_SECRET) {
-        throw new Error("Missing JWT SECRET KEY in environment variables");
+        throw new Error("Missing JWT SECRET KEY in environment variables.");
     }
     if (!process.env.PORT) {
-        throw new Error("Missing PORT in environment variables");
+        throw new Error("Missing PORT in environment variables.");
     }
-    yield mongoose_1.default.connect(process.env.DB_URL);
+    if (!process.env.VOYAGE_API_KEY) {
+        throw new Error("Missing Voyage AI API Key.");
+    }
+    yield mongoose_1.default.connect(process.env.MONGODB_URL);
     app.listen(Number(process.env.PORT), () => console.log(`MindMeh backend running on port ${Number(process.env.PORT)}`));
 });
 main();

@@ -13,37 +13,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const auth_1 = __importDefault(require("../middleware/auth"));
-const db_1 = require("../db/db");
 const mongoose_1 = __importDefault(require("mongoose"));
-const viewOnlyRouter = (0, express_1.Router)();
-viewOnlyRouter.get("/brain/:hash", auth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const hash = req.params.hash;
-    const userId = new mongoose_1.default.Types.ObjectId(req.userId);
+const auth_1 = __importDefault(require("../../middleware/auth"));
+const db_1 = require("../../db/db");
+const imageRouter = (0, express_1.Router)();
+imageRouter.get("/image/:id", auth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const _id = new mongoose_1.default.Types.ObjectId(req.params.id);
     try {
-        const currentBrainId = yield db_1.brainModel.findOne({
-            hash,
-            share: true
+        const img = yield db_1.imageModel.findOne({
+            _id
         });
-        if (currentBrainId) {
-            const listOfContents = yield db_1.contentModel.find({
-                brainId: currentBrainId._id
-            });
+        if (img) {
             res.status(200).json({
-                listOfContents
+                message: "Image fetched successfully.",
+                imageURL: img.imageURL
             });
         }
         else {
-            res.status(400).json({
-                message: "No such brain exists."
+            res.status(404).json({
+                message: "Image not found."
             });
         }
     }
     catch (e) {
         res.status(500).json({
-            message: "Internal server error.",
-            error: e
+            message: "Internal server error."
         });
     }
 }));
-exports.default = viewOnlyRouter;
+exports.default = imageRouter;

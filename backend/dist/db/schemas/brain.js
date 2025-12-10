@@ -45,6 +45,7 @@ const brainSchema = new mongoose_1.Schema({
     imageId: {
         type: mongoose_1.default.Schema.Types.ObjectId,
         ref: 'images'
-    }
+    },
+    embedding: [Number]
 });
 exports.default = brainSchema;
