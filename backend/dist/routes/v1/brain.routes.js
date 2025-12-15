@@ -30,7 +30,7 @@ brainRouter.post("/brain", auth_1.default, (req, res) => __awaiter(void 0, void 
     if (zodCheck.success) {
         const title = req.body.title;
         const share = req.body.share;
-        const imageId = new mongoose_1.default.Schema.Types.ObjectId(req.body.imageId);
+        // const imageId = new mongoose.Schema.Types.ObjectId(req.body.imageId);
         const hash = title + "-" + uuid_1.default.v4(); // unique uuid
         const userId = new mongoose_1.default.Types.ObjectId(req.userId);
         try {
@@ -40,7 +40,7 @@ brainRouter.post("/brain", auth_1.default, (req, res) => __awaiter(void 0, void 
                 share,
                 hash,
                 userId,
-                imageId,
+                // imageId,
                 embedding
             });
             res.status(200).json({
@@ -49,7 +49,8 @@ brainRouter.post("/brain", auth_1.default, (req, res) => __awaiter(void 0, void 
         }
         catch (e) {
             res.status(500).json({
-                message: "Internal server error."
+                message: "Internal server error.",
+                error: e
             });
         }
     }

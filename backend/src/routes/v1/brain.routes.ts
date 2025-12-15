@@ -22,7 +22,7 @@ brainRouter.post("/brain", auth, async (req: Request<{}, {}, T_postBrainReq>, re
   if(zodCheck.success) {
     const title = req.body.title;
     const share = req.body.share;
-    const imageId = new mongoose.Schema.Types.ObjectId(req.body.imageId);
+    // const imageId = new mongoose.Schema.Types.ObjectId(req.body.imageId);
     const hash = title + "-" + uuid.v4(); // unique uuid
     const userId = new mongoose.Types.ObjectId(req.userId);
 
@@ -33,7 +33,7 @@ brainRouter.post("/brain", auth, async (req: Request<{}, {}, T_postBrainReq>, re
         share,
         hash,
         userId,
-        imageId,
+        // imageId,
         embedding
       })
       res.status(200).json({
@@ -41,7 +41,8 @@ brainRouter.post("/brain", auth, async (req: Request<{}, {}, T_postBrainReq>, re
       });
     } catch(e) {
       res.status(500).json({
-        message: "Internal server error."
+        message: "Internal server error." ,
+        error: e
       });
     } 
   } else {
@@ -78,7 +79,8 @@ brainRouter.delete("/brain/:hash", auth, async (req: Request, res: Response) => 
     }
   } catch(e) {
     res.status(500).json({
-      message: "Internal server error."
+      message: "Internal server error.",
+      error: e
     })
   }
 });

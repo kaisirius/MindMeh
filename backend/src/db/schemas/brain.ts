@@ -8,10 +8,10 @@ const brainSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'users'
   },
-  imageId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'images'
-  },
+  // imageId: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'images'
+  // },
   embedding: [Number]
 })
 

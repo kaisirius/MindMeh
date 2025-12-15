@@ -17,11 +17,13 @@ globalBrainRouter.get("/globalbrains", auth, async (req: Request, res: Response)
           path: 'embedding', 
           queryVector: embedding, 
           numCandidates: 150, 
-          limit: 10,
-          filter: {
-            share: true
-          }
+          limit: 10
         } 
+      },
+      {
+        $match: {
+          share: true
+        }
       }, 
       { 
         $project: {
@@ -29,20 +31,21 @@ globalBrainRouter.get("/globalbrains", auth, async (req: Request, res: Response)
            title: 1, 
            hash: 1,
            userId: 1,
-           imageId: 1,
+          //  imageId: 1,
            score: {
              $meta: 'vectorSearchScore' 
             } 
           } 
       } 
     ];
-    const listOfBrains = brainModel.aggregate(pipeline);
+    const listOfBrains = await brainModel.aggregate(pipeline);
     res.status(200).json({
       listOfBrains
     })
   } catch(e) {
     res.status(500).json({
-      message: "Internal server error."
+      message: "Internal server error.",
+      error: e
     })
   }
 

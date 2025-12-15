@@ -20,7 +20,7 @@ forkBrainRouter.post("/fork/brain/:hash", auth, async (req: Request, res:Respons
         const title = currentBrain.title;
         const hash = title + "-" + uuid.v4(); // unique uuid
         const share = true;
-        const imageId = currentBrain.imageId;
+        // const imageId = currentBrain.imageId;
         const userId = new mongoose.Types.ObjectId(req.userId);
         const embedding = currentBrain.embedding;
 
@@ -29,7 +29,7 @@ forkBrainRouter.post("/fork/brain/:hash", auth, async (req: Request, res:Respons
           share,
           hash,
           userId,
-          imageId,
+          // imageId,
           embedding
         })
 

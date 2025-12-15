@@ -1,4 +1,10 @@
 import { MongoClient } from 'mongodb';
+import dotenv from "dotenv";
+import path from 'path';
+
+dotenv.config({
+  path: path.resolve(__dirname, '../../.env')
+});
 
 const client = new MongoClient(process.env.MONGODB_URL as string);
 
