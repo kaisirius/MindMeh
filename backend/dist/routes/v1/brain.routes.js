@@ -88,7 +88,8 @@ brainRouter.delete("/brain/:hash", auth_1.default, (req, res) => __awaiter(void 
     }
     catch (e) {
         res.status(500).json({
-            message: "Internal server error."
+            message: "Internal server error.",
+            error: e
         });
     }
 }));

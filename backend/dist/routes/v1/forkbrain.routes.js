@@ -31,7 +31,7 @@ forkBrainRouter.post("/fork/brain/:hash", auth_1.default, (req, res) => __awaite
             });
             const title = currentBrain.title;
             const hash = title + "-" + uuid_1.default.v4(); // unique uuid
-            const share = true;
+            const share = false;
             // const imageId = currentBrain.imageId;
             const userId = new mongoose_1.default.Types.ObjectId(req.userId);
             const embedding = currentBrain.embedding;
