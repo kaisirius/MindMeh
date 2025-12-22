@@ -3,10 +3,6 @@ import { v2 as cloudinary } from "cloudinary";
 import mongoose from "mongoose";
 import auth from "../../middleware/auth";
 import { imageModel } from "../../db/db";
-import { cloneDef } from "zod/v4/core/util.cjs";
-import { time } from "zod/v4/core/regexes.cjs";
-import { overwrite } from "zod";
-
 
 const imageRouter = Router();
 

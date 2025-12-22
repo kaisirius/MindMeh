@@ -22,6 +22,14 @@ authRouter.post("/signup", async (req: Request<{}, {}, T_signupReqBody>, res: Re
     const hashedPass = await bcrypt.hash(password, 5);
 
     try {
+      const checkExistingUser = await userModel.find({
+        email
+      });
+      if(checkExistingUser) {
+        return res.status(400).json({
+          message: "Already user exists with this email. Try logging in."
+        })
+      } 
       await userModel.create({
         username,
         password: hashedPass,
@@ -82,7 +90,7 @@ authRouter.post("/signin", async (req: Request<{}, {}, T_signinReqBody>, res: Re
           })
         }
       } else {
-        res.status(401).json({
+        res.status(404).json({
           message: "User does not exist."
         })
       }

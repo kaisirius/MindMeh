@@ -44,7 +44,7 @@ globalBrainRouter.get("/globalbrains", auth_1.default, (req, res) => __awaiter(v
                     title: 1,
                     hash: 1,
                     userId: 1,
-                    //  imageId: 1,
+                    imageId: 1,
                     score: {
                         $meta: 'vectorSearchScore'
                     }

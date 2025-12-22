@@ -29,6 +29,14 @@ authRouter.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, funct
         //hashing (along with salt)
         const hashedPass = yield bcrypt_1.default.hash(password, 5);
         try {
+            const checkExistingUser = yield db_1.userModel.find({
+                email
+            });
+            if (checkExistingUser) {
+                return res.status(400).json({
+                    message: "Already user exists with this email. Try logging in."
+                });
+            }
             yield db_1.userModel.create({
                 username,
                 password: hashedPass,
@@ -86,7 +94,7 @@ authRouter.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, funct
                 }
             }
             else {
-                res.status(401).json({
+                res.status(404).json({
                     message: "User does not exist."
                 });
             }
