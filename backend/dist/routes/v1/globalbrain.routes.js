@@ -19,8 +19,11 @@ const getVectorEmbeddings_1 = require("../../utils/getVectorEmbeddings");
 const globalBrainRouter = (0, express_1.Router)();
 globalBrainRouter.get("/globalbrains", auth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let search = req.query.search;
-    if (search == undefined)
-        search = "";
+    if (search == undefined || search === "") {
+        return res.status(200).json({
+            listOfBrains: [{}]
+        });
+    }
     const embedding = yield (0, getVectorEmbeddings_1.getEmbedding)(search);
     try {
         const pipeline = [
