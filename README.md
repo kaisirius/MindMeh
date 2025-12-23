@@ -1,5 +1,5 @@
 # MindMeh
-<img align="right" src="https://github.com/kaisirius/MindMeh/blob/main/MindMeh.png" alt="MindMeh Logo" width="175" height="175" style="vertical-align: middle; margin: 0px;"> 
+<img align="right" src="https://github.com/kaisirius/MindMeh/tree/main/assets/MindMeh.png" alt="MindMeh Logo" width="175" height="175" style="vertical-align: middle; margin: 0px;"> 
 <p align="left">
   <!-- Tech Stack Badges -->
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white"/>
