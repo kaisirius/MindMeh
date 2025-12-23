@@ -7,7 +7,11 @@ const globalBrainRouter = Router();
 
 globalBrainRouter.get("/globalbrains", auth, async (req: Request, res: Response) => {
   let search = req.query.search as string;
-  if(search == undefined) search = "";
+  if(search == undefined || search === "") {
+    return res.status(200).json({
+      listOfBrains: [{}]
+    })
+  }
   const embedding = await getEmbedding(search);
   try {
     const pipeline = [ 
