@@ -1,4 +1,4 @@
-import react, { useRef } from "react"
+import { useRef } from "react"
 import AuthPageLayout from "../components/auth/AuthPageLayout"
 import AuthButton from "../components/auth/AuthButton"
 import { Link } from "react-router-dom"

@@ -5,7 +5,7 @@ import SubHeaderWapper from "../components/home/SubHeaderWapper"
 import BrainsContainerWrapper from "../components/home/BrainsContainerWrapper"
 
 
-const HomePage = () => {
+const PrivateBrainPage = () => {
 
 
   const currentBrains = [<BrainCard />, <BrainCard />,<BrainCard />, <BrainCard />  ]
@@ -14,7 +14,7 @@ const HomePage = () => {
     <>
       <SubHeaderWapper>
         <>
-          <SubHeader innerText="All Brains" />
+          <SubHeader innerText="Private Brains" />
           <Button innerText="+Create Brain" />
         </>
       </SubHeaderWapper>
@@ -25,4 +25,4 @@ const HomePage = () => {
   )
 }
 
-export default HomePage
+export default PrivateBrainPage

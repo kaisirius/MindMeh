@@ -1,9 +1,9 @@
-import react from "react"
 import MindMehlogo from "../../assets/MindMeh.png"
 import type { T_childrenProp } from "../../types/T_childrenProp"
 
 function AuthPageLayout({ children }: T_childrenProp) {
   return (
+    
     <div className="h-screen w-screen bg-[#1C1229] bg-[radial-gradient(rgba(0,255,255,0.2)_1px,_transparent_1px)] bg-[size:16px_16px]">
       <div className="fixed top-[-150px] w-screen h-[200px] bg-[radial-gradient(ellipse,_rgba(0,255,255,1),_transparent_66%)]"> </div>
       <div className="fixed bottom-[-150px] w-screen h-[200px] bg-[radial-gradient(ellipse,_rgba(0,255,255,1),_transparent_66%)]"></div>

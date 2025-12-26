@@ -1,5 +1,3 @@
-import react from "react"
-
 function ErrorPage() {
   const sad = ":(";
   return (

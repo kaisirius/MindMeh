@@ -1,4 +1,3 @@
-import react from "react"
 import type { T_btnContent } from "../../types/T_btnContent"
 
 
