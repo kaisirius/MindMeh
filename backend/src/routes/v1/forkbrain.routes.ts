@@ -41,7 +41,8 @@ forkBrainRouter.post("/fork/brain/:hash", auth, async (req: Request, res:Respons
               description: item.description,
               typeOfContent: item.typeOfContent,
               createdAt: new Date().toISOString(),
-              brainId: newBrainForUser._id
+              brainId: newBrainForUser._id,
+              embedding: item.embedding
             }))
           );
           res.status(200).json({

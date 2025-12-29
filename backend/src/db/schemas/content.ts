@@ -6,8 +6,8 @@ const contentSchema = new Schema({
   description: String,
   typeOfContent: {
     type: String,
-    enum: ['Youtube', 'Twitter', 'Reddit', 'Medium'],
-    default: 'other'
+    enum: ['Youtube', 'Twitter', 'Reddit', 'Medium', 'Other'],
+    default: 'Other'
   },
   createdAt: {
     type: String,
@@ -16,7 +16,8 @@ const contentSchema = new Schema({
   brainId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'brains'
-  } 
+  },
+  embedding: [Number]
 });
 
 export default contentSchema

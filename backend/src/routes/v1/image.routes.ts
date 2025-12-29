@@ -36,7 +36,7 @@ imageRouter.get("/image/:id", auth, async (req: Request<{ id: string }>, res: Re
   }
 });
 
-imageRouter.post("/image/getSignedURL", auth, async (req: Request, res: Response) => {
+imageRouter.get("/image/getSignedURL", auth, async (req: Request, res: Response) => {
   const userId = req.userId; // act as public_id
   const timestamp = Math.round((new Date()).getTime()/1000);
   const params_to_sign = {

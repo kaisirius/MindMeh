@@ -3,12 +3,13 @@ import SubHeader from "../components/home/SubHeader"
 import Button from "../components/home/Button"
 import SubHeaderWapper from "../components/home/SubHeaderWapper"
 import BrainsContainerWrapper from "../components/home/BrainsContainerWrapper"
+import type { JSX } from "react"
 
 
 const PublicBrainPage = () => {
 
 
-  const currentBrains = [<BrainCard />, <BrainCard />,<BrainCard />, <BrainCard />  ]
+  const currentBrains: JSX.Element[] = [];
 
   return (
     <>

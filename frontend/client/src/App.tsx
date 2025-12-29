@@ -7,7 +7,8 @@ import HomePage from "./pages/HomePage"
 import PublicBrainPage from "./pages/PublicBrainPage"
 import PrivateBrainPage from "./pages/PrivateBrainPage"
 import SearchGlobalBrainPage from "./pages/SearchGlobalBrainPage"
-import { GridBackground } from "./components/aceternityUI/GridBackground"
+import MyBrainPage from "./pages/MyBrainPage"
+import ViewBrainPage from "./pages/ViewBrainPage"
 
 function App() {
   
@@ -17,12 +18,13 @@ function App() {
         <Route path="/signup" element={<SignupPage />}></Route>
         <Route path="/signin" element={<SigninPage />}></Route>
         <Route element={<Layout />}>
-          <Route path="/home/allBrains" element={<HomePage />}></Route>
+          <Route path="/home" element={<HomePage />}></Route>
           <Route path="/home/publicBrains" element={<PublicBrainPage />}></Route>
           <Route path="/home/privateBrains" element={<PrivateBrainPage />}></Route>
           <Route path="/home/globalBrains" element={<SearchGlobalBrainPage />}></Route>
         </Route>
-        <Route path="/check" element={<GridBackground />}></Route>
+        <Route path="/brain/:hash" element={<MyBrainPage />}></Route>
+        <Route path="/view/brain/:hash" element={<ViewBrainPage />}></Route>
         <Route path="*" element={<ErrorPage />}></Route>
       </Routes>
     </BrowserRouter>
