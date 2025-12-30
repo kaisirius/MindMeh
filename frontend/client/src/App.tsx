@@ -9,25 +9,54 @@ import PrivateBrainPage from "./pages/PrivateBrainPage"
 import SearchGlobalBrainPage from "./pages/SearchGlobalBrainPage"
 import MyBrainPage from "./pages/MyBrainPage"
 import ViewBrainPage from "./pages/ViewBrainPage"
+import { RecoilRoot } from "recoil"
+import { Toaster } from "./components/ui/sonner"
 
 function App() {
   
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/signup" element={<SignupPage />}></Route>
-        <Route path="/signin" element={<SigninPage />}></Route>
-        <Route element={<Layout />}>
-          <Route path="/home" element={<HomePage />}></Route>
-          <Route path="/home/publicBrains" element={<PublicBrainPage />}></Route>
-          <Route path="/home/privateBrains" element={<PrivateBrainPage />}></Route>
-          <Route path="/home/globalBrains" element={<SearchGlobalBrainPage />}></Route>
-        </Route>
-        <Route path="/brain/:hash" element={<MyBrainPage />}></Route>
-        <Route path="/view/brain/:hash" element={<ViewBrainPage />}></Route>
-        <Route path="*" element={<ErrorPage />}></Route>
-      </Routes>
-    </BrowserRouter>
+    <>
+      <Toaster position="top-center"
+        toastOptions={{
+          style: {
+            background: "#1C1229",
+            color: "#00FFFF",
+            border: "1px solid #00FFFF",
+            borderRadius: "8px",
+            fontSize: "15px"
+          },
+        }}
+        style={
+          {
+            position: "absolute",
+            top: 0,
+            left: "50%",
+            transform: "translateX(-50%)",
+
+            "--normal-bg": "#1C1229",
+            "--normal-text": "#00FFFF",
+            "--normal-border": "#00FFFF",
+          } as React.CSSProperties
+        } />
+      <RecoilRoot>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/signup" element={<SignupPage />}></Route>
+            <Route path="/signin" element={<SigninPage />}></Route>
+            <Route element={<Layout />}>
+              <Route path="/home" element={<HomePage />}></Route>
+              <Route path="/home/publicBrains" element={<PublicBrainPage />}></Route>
+              <Route path="/home/privateBrains" element={<PrivateBrainPage />}></Route>
+              <Route path="/home/globalBrains" element={<SearchGlobalBrainPage />}></Route>
+            </Route>
+            <Route path="/brain/:hash" element={<MyBrainPage />}></Route>
+            <Route path="/view/brain/:hash" element={<ViewBrainPage />}></Route>
+            <Route path="*" element={<ErrorPage />}></Route>
+          </Routes>
+        </BrowserRouter>
+      </RecoilRoot>
+    </>
+    
   )
 }
 

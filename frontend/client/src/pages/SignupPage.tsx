@@ -1,11 +1,15 @@
 import { useRef } from "react"
 import AuthPageLayout from "../components/auth/AuthPageLayout"
 import AuthButton from "../components/auth/AuthButton"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import password_open_eye from "../assets/open_eye.png"
 import password_close_eye from "../assets/close_eye.png"
+import api from "../utils/APIclient"
+import { toast } from "sonner"
+import axios from "axios"
 
 function SignupPage() {
+  const navigate = useNavigate();
   const usernameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passRef = useRef<HTMLInputElement>(null);
@@ -18,6 +22,30 @@ function SignupPage() {
     const password = passRef.current.value;
 
     // axios req & useNavigate
+    const popup = toast.loading("Signing up...")
+
+    try { 
+      await api.post("/signup", {
+        username,
+        email,
+        password
+      })
+      toast.success("New user has been created. Please login.", { id: popup })
+      navigate("/signin")      
+    } catch(err: unknown) {
+      if(axios.isAxiosError(err)) { // type narrowing 
+
+        const status = err.response?.status;
+        
+        if(status == 400) {
+          toast.info("Wrong format of input. Password must have at least 6 characters with at least one lowercase letter, one uppercase letter and one special character.", { id: popup })
+        } else if(status == 409) {
+          toast.info("User already exists.", { id: popup })
+        } else {
+          navigate("/error")
+        }
+      }  
+    }
   }
 
   const handlePassVisibility = () => {

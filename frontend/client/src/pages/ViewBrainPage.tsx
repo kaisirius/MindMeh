@@ -41,7 +41,7 @@ function ViewBrainPage() {
   return (
     <div className="w-screen h-screen bg-[#1C1229] bg-[radial-gradient(rgba(0,255,255,0.2)_1px,_transparent_1px)] bg-[size:16px_16px]">
       <div className="w-screen h-auto bg-[#1C1229] bg-[radial-gradient(rgba(0,255,255,0.2)_1px,_transparent_1px)] bg-[size:16px_16px]">
-        <div className="h-[100px] bg-[#1C1221] flex justify-between items-center shadow-[0_2px_4px] shadow-[#00FFFF] mb-9">
+        <div className="h-[100px] bg-[#1C1221] flex justify-between items-center shadow-[0_2px_4px] shadow-[#00FFFF] mb-9 sticky top-0 z-10">
           <div className="flex items-center">
             <div className="flex items-center justify-center m-2 mr-0">
               <button onClick={() => handleGoBack(navigate)} className="w-8 h-8 rounded-lg hover:bg-slate-800 transition duration-150">

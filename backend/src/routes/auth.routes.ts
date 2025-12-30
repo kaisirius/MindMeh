@@ -14,22 +14,19 @@ authRouter.post("/signup", async (req: Request<{}, {}, T_signupReqBody>, res: Re
   const checkParsing = zodValidator(req);
 
   if(checkParsing.success) {
-    const username = req.body.username;
-    const email = req.body.email;
-    const password = req.body.password;
-
-    //hashing (along with salt)
-    const hashedPass = await bcrypt.hash(password, 5);
-
+    const { username, email, password } = req.body;
     try {
       const checkExistingUser = await userModel.find({
         email
       });
-      if(checkExistingUser) {
-        return res.status(400).json({
+      if(checkExistingUser.length > 0) {
+        return res.status(409).json({
           message: "Already user exists with this email. Try logging in."
         })
       } 
+      //hashing (along with salt)
+      const hashedPass = await bcrypt.hash(password, 5);
+
       await userModel.create({
         username,
         password: hashedPass,
@@ -45,7 +42,7 @@ authRouter.post("/signup", async (req: Request<{}, {}, T_signupReqBody>, res: Re
       })
     } 
   } else {
-    res.status(401).json({
+    res.status(400).json({
       message: "Input validation failed.",
       error: checkParsing.error
     })

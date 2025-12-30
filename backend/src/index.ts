@@ -9,7 +9,9 @@ import mainRouter from "./routes/main"
 dotenv.config();
 
 const app: Express = express();
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:5173", "http://localhost:3000"],
+}));
 app.use(express.json());
 app.use(mainRouter);
 
