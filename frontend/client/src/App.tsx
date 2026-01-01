@@ -11,6 +11,7 @@ import MyBrainPage from "./pages/MyBrainPage"
 import ViewBrainPage from "./pages/ViewBrainPage"
 import { RecoilRoot } from "recoil"
 import { Toaster } from "./components/ui/sonner"
+import Auth from "./components/auth/Auth"
 
 function App() {
   
@@ -43,14 +44,16 @@ function App() {
           <Routes>
             <Route path="/signup" element={<SignupPage />}></Route>
             <Route path="/signin" element={<SigninPage />}></Route>
-            <Route element={<Layout />}>
-              <Route path="/home" element={<HomePage />}></Route>
-              <Route path="/home/publicBrains" element={<PublicBrainPage />}></Route>
-              <Route path="/home/privateBrains" element={<PrivateBrainPage />}></Route>
-              <Route path="/home/globalBrains" element={<SearchGlobalBrainPage />}></Route>
-            </Route>
-            <Route path="/brain/:hash" element={<MyBrainPage />}></Route>
-            <Route path="/view/brain/:hash" element={<ViewBrainPage />}></Route>
+            <Route element={<Auth />}>
+              <Route element={<Layout />}>
+                <Route path="/home" element={<HomePage />}></Route>
+                <Route path="/home/publicBrains" element={<PublicBrainPage />}></Route>
+                <Route path="/home/privateBrains" element={<PrivateBrainPage />}></Route>
+                <Route path="/home/globalBrains" element={<SearchGlobalBrainPage />}></Route>
+              </Route>
+              <Route path="/brain/:hash" element={<MyBrainPage />}></Route>
+              <Route path="/view/brain/:hash" element={<ViewBrainPage />}></Route>
+            </Route>    
             <Route path="*" element={<ErrorPage />}></Route>
           </Routes>
         </BrowserRouter>

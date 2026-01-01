@@ -3,30 +3,64 @@ import SubHeader from "../components/home/SubHeader"
 import Button from "../components/home/Button"
 import SubHeaderWapper from "../components/home/SubHeaderWapper"
 import BrainsContainerWrapper from "../components/home/BrainsContainerWrapper"
-import type { JSX } from "react"
+import { useEffect, useState, type JSX } from "react"
+import CreateBrainPopup from "../components/brain/CreateBrainPopup"
+import api from "../utils/APIclient"
+import type { T_brain } from "../types/T_brain"
+import type { T_currentBrainProps } from "../types/T_currentBrainProps"
 
 
 const HomePage = () => {
+  const [CreateBrainWindow, setCreateBrainWindow] = useState<boolean>(false); 
+  const [CurrentBrains, setCurrentBrains] = useState<T_currentBrainProps[]>([]);
 
+  useEffect(() => {
+    const fetchBrains = async () => {
+      const response = await api.get("/home/brains");
+      const Brains: T_brain[] = response.data.listOfBrains;
+      const ImageOfBrains: string[] = [];
 
-  const currentBrains: JSX.Element[] = [
-  <BrainCard imageURL="https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?cs=srgb&dl=pexels-thatguycraig000-1563356.jpg&fm=jpg" title="Javascript programming random wqd" />,
-  <BrainCard imageURL="https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?cs=srgb&dl=pexels-thatguycraig000-1563356.jpg&fm=jpg" title="Javascript programming" />,
-  <BrainCard imageURL="https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?cs=srgb&dl=pexels-thatguycraig000-1563356.jpg&fm=jpg" title="Javascript" />,
-  <BrainCard imageURL="https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?cs=srgb&dl=pexels-thatguycraig000-1563356.jpg&fm=jpg" title="Javascript" />,
-  <BrainCard imageURL="https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?cs=srgb&dl=pexels-thatguycraig000-1563356.jpg&fm=jpg" title="Javascript" />
-]
+      for(let i = 0; i < Brains.length; i++) {
+        const id = Brains[i].imageId;
+        const res = (await api.get(`/api/v1/image/${id}`)).data.imageURL as string
+        ImageOfBrains[i] = res;
+      }
+
+      setCurrentBrains(Brains.map((b: T_brain, idx) => {
+        return {
+          title: b.title,
+          hash: b.hash,
+          imageURL: ImageOfBrains[idx]
+        }
+      }));
+
+    }
+    fetchBrains()
+  }, [])
+
+  const BrainComponents: JSX.Element[] = [];
+  for(let i = 0; i < CurrentBrains.length; i++) {
+    BrainComponents[i] = <BrainCard hash={CurrentBrains[i].hash} title={CurrentBrains[i].title} imageURL={CurrentBrains[i].imageURL} key={i} />
+  }
 
   return (
     <>
+    {CreateBrainWindow ? <CreateBrainPopup 
+                          CreateBrainWindow={CreateBrainWindow} setCreateBrainWindow={setCreateBrainWindow} 
+                          CurrentBrains={CurrentBrains} setCurrentBrains={setCurrentBrains} /> : null}
       <SubHeaderWapper>
         <>
           <SubHeader innerText="All Brains" />
-          <Button innerText="+Create Brain" />
+          <div onClick={() => setCreateBrainWindow(!CreateBrainWindow)}><Button innerText="+Create Brain"/></div>
         </>
       </SubHeaderWapper>
       <BrainsContainerWrapper>
-        <>{currentBrains}</>
+        <>
+          {
+            CurrentBrains.length > 0 ? BrainComponents : 
+            <div className=" text-[#00FFFF] h-[400px] ml-[425px] flex justify-center items-center text-4xl opacity-50">No exisiting brain.</div>
+          }
+        </>
       </BrainsContainerWrapper>
     </>
   )

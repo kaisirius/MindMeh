@@ -2,7 +2,12 @@ import type { T_brainCardProps } from "../../types/T_brainCardProps"
 import { cn } from "../../../lib/utils"
 import delete_icon from "../../assets/delete_icon.png"
 
-const BrainCard =  ({ imageURL, title }: T_brainCardProps) => {
+const BrainCard =  ({ imageURL, title, hash }: T_brainCardProps) => {
+
+  const handleDeleteBrain = () => {
+    
+  }
+
   return (
     <div className="w-[300px] drop-shadow-[0px_0px_5px_rgba(0,255,255,0.5)] border-[2px] border-[#00FFFF] rounded-3xl" title={title}>
       <div
@@ -18,7 +23,9 @@ const BrainCard =  ({ imageURL, title }: T_brainCardProps) => {
         <p className="font-semibold text-[#00FFFF] relative truncate pl-4 pb-4 pt-4 pr-10" >
           {title}
         </p>
-        <button className="h-full size-10 flex justify-center items-center border-[#00FFFF] border-l-[2px] absolute right-0" onClick={() => console.log("hello")}><img src={delete_icon} width={25} className=""/></button>
+        <button onClick={handleDeleteBrain} className="h-full size-10 flex justify-center items-center border-[#00FFFF] border-l-[2px] absolute right-0">
+          <img src={delete_icon} width={25} className=""/>
+        </button>
       </div>
     </div>
   )

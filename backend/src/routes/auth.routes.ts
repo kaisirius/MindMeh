@@ -2,11 +2,11 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import zod, {  ZodSafeParseResult } from "zod"
 import { Request, Response, Router } from "express"
-
 import { userModel } from "../db/db"
 import zodValidator from "../utils/zodValidator"
 import T_signupReqBody from "../types/T_signupReq"
 import T_signinReqBody from "../types/T_signinReq"
+import auth from "../middleware/auth"
 const authRouter = Router();
 
 authRouter.post("/signup", async (req: Request<{}, {}, T_signupReqBody>, res: Response) => {
@@ -105,5 +105,11 @@ authRouter.post("/signin", async (req: Request<{}, {}, T_signinReqBody>, res: Re
     })
   }
 });
+
+authRouter.get("/CheckUser", auth, (req: Request, res: Response) => {
+  res.status(200).json({
+    message: "Valid user."
+  })
+})
 
 export default authRouter

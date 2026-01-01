@@ -22,9 +22,9 @@ brainRouter.post("/brain", auth, async (req: Request<{}, {}, T_postBrainReq>, re
   if(zodCheck.success) {
     const title = req.body.title;
     const share = req.body.share;
-    const imageId = new mongoose.Schema.Types.ObjectId(req.body.imageId);
+    const imageId =req.body.imageId;
     const hash = title + "-" + uuid.v4(); // unique uuid
-    const userId = new mongoose.Types.ObjectId(req.userId);
+    const userId = req.userId;
 
     try {
       const embedding = await getEmbedding(title);
