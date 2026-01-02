@@ -1,12 +1,14 @@
 import type { T_brainCardProps } from "../../types/T_brainCardProps"
 import { cn } from "../../../lib/utils"
 import delete_icon from "../../assets/delete_icon.png"
+import { useCurrentBrainsContext } from "../../context/BrainsContext"
+import api from "../../utils/APIclient"
+import { toast } from "sonner"
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
-const BrainCard =  ({ imageURL, title, hash }: T_brainCardProps) => {
-
-  const handleDeleteBrain = () => {
-    
-  }
+const ViewBrainCard =  ({ imageURL, title, hash }: T_brainCardProps) => {
+  const navigate = useNavigate();
 
   return (
     <div className="w-[300px] drop-shadow-[0px_0px_5px_rgba(0,255,255,0.5)] border-[2px] border-[#00FFFF] rounded-3xl" title={title}>
@@ -23,9 +25,6 @@ const BrainCard =  ({ imageURL, title, hash }: T_brainCardProps) => {
         <p className="font-semibold text-[#00FFFF] relative truncate pl-4 pb-4 pt-4 pr-10" >
           {title}
         </p>
-        <button onClick={handleDeleteBrain} className="h-full size-10 flex justify-center items-center border-[#00FFFF] border-l-[2px] absolute right-0">
-          <img src={delete_icon} width={25} className=""/>
-        </button>
       </div>
     </div>
   )
@@ -33,4 +32,4 @@ const BrainCard =  ({ imageURL, title, hash }: T_brainCardProps) => {
 
 
 
-export default BrainCard
+export default ViewBrainCard

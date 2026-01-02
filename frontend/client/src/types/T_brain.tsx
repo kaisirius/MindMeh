@@ -4,5 +4,5 @@ export type T_brain = {
   share: boolean,
   userId: string,
   imageId: string,
-  embedding: number[]
+  embedding?: number[]
 }

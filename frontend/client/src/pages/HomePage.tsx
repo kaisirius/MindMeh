@@ -1,13 +1,16 @@
-import BrainCard from "../components/brain/BrainCard"
+import BrainCard from "../components/brain/MyBrainCard"
 import SubHeader from "../components/home/SubHeader"
 import Button from "../components/home/Button"
 import SubHeaderWapper from "../components/home/SubHeaderWapper"
 import BrainsContainerWrapper from "../components/home/BrainsContainerWrapper"
-import { useEffect, useState, type JSX } from "react"
+import { createContext, useEffect, useState, type JSX } from "react"
 import CreateBrainPopup from "../components/brain/CreateBrainPopup"
 import api from "../utils/APIclient"
 import type { T_brain } from "../types/T_brain"
 import type { T_currentBrainProps } from "../types/T_currentBrainProps"
+import { CurrentBrainsContext } from "../context/BrainsContext"
+
+
 
 
 const HomePage = () => {
@@ -33,7 +36,6 @@ const HomePage = () => {
           imageURL: ImageOfBrains[idx]
         }
       }));
-
     }
     fetchBrains()
   }, [])
@@ -44,8 +46,8 @@ const HomePage = () => {
   }
 
   return (
-    <>
-    {CreateBrainWindow ? <CreateBrainPopup 
+    <CurrentBrainsContext.Provider value={{CurrentBrains, setCurrentBrains}}>
+      {CreateBrainWindow ? <CreateBrainPopup 
                           CreateBrainWindow={CreateBrainWindow} setCreateBrainWindow={setCreateBrainWindow} 
                           CurrentBrains={CurrentBrains} setCurrentBrains={setCurrentBrains} /> : null}
       <SubHeaderWapper>
@@ -62,7 +64,7 @@ const HomePage = () => {
           }
         </>
       </BrainsContainerWrapper>
-    </>
+    </CurrentBrainsContext.Provider>
   )
 }
 
