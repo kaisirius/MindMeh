@@ -1,6 +1,8 @@
 export type T_contentCardProps = {
   imageURL: string,
+  link: string,
   title: string,
   description: string,
-  editable: boolean
+  id: string,
+  hash?: string
 }

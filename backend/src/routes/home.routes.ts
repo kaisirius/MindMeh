@@ -35,7 +35,12 @@ homeRouter.get("/brain/:hash", auth, async (req: Request, res: Response) => {
         brainId: currentBrainId._id
       })
       res.status(200).json({
-        listOfContents
+        listOfContents,
+        share: currentBrainId.share
+      })
+    } else {
+      return res.status(404).json({
+        message: "Brain not found."
       })
     }
   } catch(e) {

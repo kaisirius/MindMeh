@@ -17,7 +17,7 @@ contentRouter.post("/content/:hash", auth,  async (req: Request<{hash: string}, 
   
   type contentSchemaType = zod.infer<typeof contentSchema>;
   const checkInput: ZodSafeParseResult<contentSchemaType> = contentSchema.safeParse(req.body);
-  const userId = new mongoose.Types.ObjectId(req.userId);
+  const userId = req.userId;
 
   if(checkInput.success) {
     try {
@@ -26,7 +26,7 @@ contentRouter.post("/content/:hash", auth,  async (req: Request<{hash: string}, 
         userId
       });
       if(currentBrain) {
-        const embedding = await getEmbedding("");
+        const embedding = [1];
         
         const contentCreatedObject = await contentModel.create({
           link: req.body.link,
@@ -37,6 +37,7 @@ contentRouter.post("/content/:hash", auth,  async (req: Request<{hash: string}, 
           brainId: currentBrain._id,
           embedding
         })
+        
         res.status(200).json({
           message: "Content successfully added to corresponding brain.",
           id: contentCreatedObject._id.toString()
@@ -48,7 +49,8 @@ contentRouter.post("/content/:hash", auth,  async (req: Request<{hash: string}, 
       }
     } catch(e) {
       res.status(500).json({
-        message: "Internal server error."
+        message: "Internal server error.",
+        error: e
       })
     }
   } else {
@@ -59,9 +61,9 @@ contentRouter.post("/content/:hash", auth,  async (req: Request<{hash: string}, 
 });
 
 contentRouter.delete("/content/:hash/:contentId", auth, async (req: Request<{hash: string, contentId: string}>, res: Response) => {
-  const userId = new mongoose.Types.ObjectId(req.userId);
+  const userId = req.userId;
   const hash = req.params.hash;
-  const _id = new mongoose.Types.ObjectId(req.params.contentId);
+  const _id = req.params.contentId;
   
   try {
     const currentBrain = await brainModel.findOne({

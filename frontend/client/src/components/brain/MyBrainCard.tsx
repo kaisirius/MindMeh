@@ -29,7 +29,7 @@ const BrainCard =  ({ imageURL, title, hash }: T_brainCardProps) => {
   return (
     <div className="w-[300px] drop-shadow-[0px_0px_5px_rgba(0,255,255,0.5)] border-[2px] border-[#00FFFF] rounded-3xl" title={title}>
       <div
-        onClick={() => console.log("hmm")}
+        onClick={() => navigate(`/brain/${hash}`)}
         className={cn(
           "cursor-pointer group/card overflow-hidden relative card h-[250px] rounded-3xl rounded-b-none mx-auto backgroundImage flex flex-col justify-between p-4 bg-[length:100%_100%] bg-no-repeat"
         )}
