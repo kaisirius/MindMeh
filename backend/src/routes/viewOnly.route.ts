@@ -7,7 +7,6 @@ const viewOnlyRouter = Router();
 
 viewOnlyRouter.get("/brain/:hash", auth, async (req: Request, res:Response) => {
   const hash = req.params.hash;
-  const userId = new mongoose.Types.ObjectId(req.userId);
     try{
       const currentBrainId = await brainModel.findOne({
         hash,

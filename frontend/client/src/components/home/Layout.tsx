@@ -1,16 +1,22 @@
 import { useState } from "react"
 import MindMehlogo from "../../assets/MindMeh.png"
 import Logout from "../../assets/logout.png"
-import { Link, Outlet, useLocation } from "react-router-dom"
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom"
 
 const Layout = () => {
   const location = useLocation();
   const url = location.pathname.split('/');
+  const navigate = useNavigate();
   let currentTab = "Home";
   if(url.length == 3) {
     if(url[2] === "publicBrains") currentTab = "Public"
     else if(url[2] === "privateBrains") currentTab = "Private"
     else if(url[2] === "globalBrains") currentTab = "Global"
+  }
+
+  const handleLogout = () => {
+    localStorage.setItem("token", "")
+    navigate("/signin")
   }
   return (
     <div className="bg-[#1C1229] w-screen h-screen bg-[radial-gradient(rgba(0,255,255,0.2)_1px,_transparent_1px)] bg-[size:16px_16px]">
@@ -40,7 +46,7 @@ const Layout = () => {
               {currentTab === "Global" ? <div className="w-full bg-[#00FFFF] h-[1px] "></div> : null}
             </div>
             <div className="ml-[280px] mr-[30px]">
-              <button><img src={Logout} width={40}/></button>
+              <button onClick={handleLogout}><img src={Logout} width={40}/></button>
             </div>
           </div>
         </div>

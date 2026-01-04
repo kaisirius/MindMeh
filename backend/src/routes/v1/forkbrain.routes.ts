@@ -21,7 +21,7 @@ forkBrainRouter.post("/fork/brain/:hash", auth, async (req: Request, res:Respons
         const hash = title + "-" + uuid.v4(); // unique uuid
         const share = false;
         const imageId = currentBrain.imageId;
-        const userId = new mongoose.Types.ObjectId(req.userId);
+        const userId = req.userId;
         const embedding = currentBrain.embedding;
 
         const newBrainForUser = await brainModel.create({
