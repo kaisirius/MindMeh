@@ -76,7 +76,7 @@ authRouter.post("/signin", async (req: Request<{}, {}, T_signinReqBody>, res: Re
           const token = jwt.sign({
             userId
           }, process.env.JWT_SECRET as string);
-
+          
           res.status(200).json({
             message: "Signed in successfully.",
             token

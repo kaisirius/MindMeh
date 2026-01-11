@@ -27,9 +27,8 @@ function SigninPage() {
         email,
         password
       })
-      toast.success("Welcome!", { id: popup })
-      // local storage
       localStorage.setItem("token", response.data.token);
+      toast.success("Welcome!", { id: popup })
       setTimeout(() => navigate("/home"), 500)
     } catch(err: unknown) {
       if(axios.isAxiosError(err)) { // type narrrowing

@@ -93,6 +93,30 @@ function MyBrainPage() {
     }
   }
 
+  const GenerateMindMap = async () => {
+    try {
+      const listOfContents: { title: string, description: string, link: string }[] = [];
+      for(let i = 0; i < CurrentContents.length; i++) {
+        listOfContents[i] = {
+          title: CurrentContents[i].title,
+          description: CurrentContents[i].description,
+          link: CurrentContents[i].link
+        }
+      }
+      const response = await api.post("/api/v1/brain/mindmap", {
+        listOfContents
+      },{
+        timeout: 15000
+      });
+
+      console.log(response.data.mindmap)
+    } catch(err) {
+      if(axios.isAxiosError(err)) {
+        navigate("/error")
+      }
+    }
+  }
+
   return (
     <CurrentContentsContext.Provider value={{CurrentContents, setCurrentContents}}>
       <div className="w-screen h-screen bg-[#1C1229] bg-[radial-gradient(rgba(0,255,255,0.2)_1px,_transparent_1px)] bg-[size:16px_16px]">
@@ -113,7 +137,7 @@ function MyBrainPage() {
             <div className="flex items-center">
               <div onClick={() => setAddContentWindow(!AddContentWindow)}><Button innerText="+Add Content"/></div>
               <div onClick={changeVisibility}><Button innerText="Toggle Visibility" /></div>
-              <Button innerText="MindMap AI" />
+              <div onClick={GenerateMindMap}><Button innerText="MindMap AI" /></div>
             </div>
           </div>
           <BrainsContainerWrapper>
