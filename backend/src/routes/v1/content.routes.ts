@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
 import zod, { ZodSafeParseResult } from "zod";
 import auth from "../../middleware/auth";
-import { brainModel, contentModel } from "../../db/db";
+import { brainModel, contentModel, mindmapModel } from "../../db/db";
 import mongoose from "mongoose";
 import { getEmbedding } from "../../utils/getVectorEmbeddings";
 
@@ -36,8 +36,14 @@ contentRouter.post("/content/:hash", auth,  async (req: Request<{hash: string}, 
           createdAt: new Date().toISOString(),
           brainId: currentBrain._id,
           embedding
-        })
-        
+        });
+
+        await mindmapModel.updateOne({
+          hash: req.params.hash,
+        }, {
+          isChanged: true
+        });
+
         res.status(200).json({
           message: "Content successfully added to corresponding brain.",
           id: contentCreatedObject._id.toString()
@@ -74,7 +80,13 @@ contentRouter.delete("/content/:hash/:contentId", auth, async (req: Request<{has
       await contentModel.deleteOne({
         _id,
         brainId: currentBrain._id
-      })
+      });
+
+      await mindmapModel.updateOne({
+        hash: req.params.hash,
+      }, {
+        isChanged: true
+      });
       
       res.status(201).json({
         message: "Content deleted from brain."

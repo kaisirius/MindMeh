@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express"
-import { brainModel, contentModel } from "../../db/db";
+import { brainModel, contentModel, mindmapModel } from "../../db/db";
 import mongoose from "mongoose";
 import auth from "../../middleware/auth";
 import uuid from "uuid"
@@ -34,6 +34,11 @@ forkBrainRouter.post("/fork/brain/:hash", auth, async (req: Request, res:Respons
         })
 
         if(newBrainForUser) {
+          await mindmapModel.create({
+            hash,
+            mindmap: "",
+            isChanged: false
+          })
           await contentModel.insertMany(
             listOfContents.map(item => ({
               link: item.link,

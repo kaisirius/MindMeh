@@ -94,6 +94,10 @@ function MyBrainPage() {
   }
 
   const GenerateMindMap = async () => {
+    if(CurrentContents.length == 0) {
+      toast.info("Add content to generate mindmap"); 
+      return;
+    }
     try {
       const listOfContents: { title: string, description: string, link: string }[] = [];
       for(let i = 0; i < CurrentContents.length; i++) {
@@ -103,13 +107,18 @@ function MyBrainPage() {
           link: CurrentContents[i].link
         }
       }
-      const response = await api.post("/api/v1/brain/mindmap", {
+      const popup = toast.loading("Generating Mindmap using AI. Please wait!");
+      const response = await api.post(`/api/v1/brain/mindmap/${hash}`, {
         listOfContents
       },{
         timeout: 15000
       });
+      const mindmap = response.data.mindmap;
+      console.log(response.data.mindmap);
 
-      console.log(response.data.mindmap)
+      localStorage.setItem("mindmap", JSON.stringify(mindmap))
+      toast.success("Mindmap generated. Redirecting!", { id: popup });
+      setTimeout(() => window.open(`http://localhost:5173/brain/mindmap/${hash}`), 500)
     } catch(err) {
       if(axios.isAxiosError(err)) {
         navigate("/error")

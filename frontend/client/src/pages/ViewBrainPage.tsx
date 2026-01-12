@@ -22,7 +22,7 @@ const handleGoBack = (navigate: NavigateFunction) => {
 }
 
 
-function MyBrainPage() {
+function ViewBrainPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname.split('/');
@@ -109,7 +109,6 @@ function MyBrainPage() {
             </div>
             <div className="flex items-center">
               <div onClick={ForkBrain}><Button innerText="Fork Brain"/></div>
-              <Button innerText="MindMap AI" />
             </div>
           </div>
           <BrainsContainerWrapper>
@@ -126,4 +125,4 @@ function MyBrainPage() {
   )
 } 
 
-export default MyBrainPage
+export default ViewBrainPage

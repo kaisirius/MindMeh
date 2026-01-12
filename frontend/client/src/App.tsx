@@ -13,6 +13,7 @@ import { RecoilRoot } from "recoil"
 import { Toaster } from "./components/ui/sonner"
 import Auth from "./components/auth/Auth"
 import ErrorPage from "./pages/ErrorPage"
+import MindMapPage from "./pages/MindMapPage"
 
 function App() {
   
@@ -55,6 +56,7 @@ function App() {
               </Route>  
               <Route path="/brain/:hash" element={<MyBrainPage />}></Route>
               <Route path="/view/brain/:hash" element={<ViewBrainPage />}></Route>
+              <Route path="/brain/mindmap/:hash" element={<MindMapPage />}></Route>
             </Route>    
             <Route path="*" element={<NotFound />}></Route>
           </Routes>

@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import zod, { ZodSafeParseResult } from "zod"
 import uuid from "uuid"
 import auth from "../../middleware/auth";
-import { brainModel, contentModel } from "../../db/db";
+import { brainModel, contentModel, mindmapModel } from "../../db/db";
 import T_postBrainReq from "../../types/T_postBrainReq";
 import { getEmbedding } from "../../utils/getVectorEmbeddings";
 
@@ -35,7 +35,12 @@ brainRouter.post("/brain", auth, async (req: Request<{}, {}, T_postBrainReq>, re
         userId,
         imageId,
         embedding
-      })
+      });
+      await mindmapModel.create({
+        hash,
+        mindmap: "",
+        isChanged: false
+      });
       res.status(200).json({
         hash
       });
