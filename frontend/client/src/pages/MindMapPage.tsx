@@ -22,7 +22,7 @@ const MindMapPage = () => {
   const path = location.pathname.split('/');
   const hash = path[3];
   const title = hash.split('-')[0];
-  const brainTitle = title.replace("%20", " ");
+  const brainTitle = title.replaceAll("%20", " ");
   const mindmap = localStorage.getItem("mindmap") as string
   const data = JSON.parse(mindmap)
   const nodes: any = [];

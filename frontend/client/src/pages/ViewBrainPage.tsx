@@ -28,7 +28,7 @@ function ViewBrainPage() {
   const path = location.pathname.split('/');
   const hash = path[3];
   const title = hash.split('-')[0];
-  const brainTitle = title.replace("%20", " "); 
+  const brainTitle = title.replaceAll("%20", " "); 
 
   const [ CurrentContents, setCurrentContents ] = useState<T_contentCardProps[]>([]);
   
