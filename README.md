@@ -78,7 +78,7 @@ MINDMEH/
 ### Prerequisites
 * npm ^10.8.1
 * node ^24.8.0
-* MongoDB cluster
+* MongoDB cluster connection string (Make sure to add /MindMeh in end of string while updating environment variables)
 * VoyageAI credentials
 * Cloudinary credentials
 * Gemini credentials
@@ -113,9 +113,11 @@ cd ../frontend/client
 npm install
 ``` 
 **8. Run client**
-```
+```bash
 npm run dev
 ``` 
+**9. Go to http://localhost:5173/signup**
+
 ### URLs
 * User's Frontend domain : http://localhost:5173
 * Backend API domain : http://localhost:3000
