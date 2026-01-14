@@ -89,31 +89,30 @@ git clone https://github.com/kaisirius/MindMeh.git
 ```
 **2. Setup environment variables**
 ```bash
+cd backend
 cp .env.example .env
 # Edit .env with your credentials
 ```
-**3. Run script to create vector index in DB**
-```bash
-cd backend/src
-node .\scripts\vectorSearchIndex.ts
-```
 **3. Install backend dependencies**
 ```bash
-cd ..
 npm install
-``` 
-**4. Compile & Run HTTP server**
+```
+**4. Go to MongoDB Compass and inside cluster create database "MindMeh" & collection "brains"**  
+**5. Build backend & Run script to create vector index in DB**
 ```bash
-mkdir dist
-npx tsc -b 
+npx tsc -b
+node .\dist\scripts\vectorSearchIndex.js
+``` 
+**6. Run HTTP server**
+```bash
 npm start
 ``` 
-**5. Install frontend dependencies**
+**7. Install frontend dependencies**
 ```bash
 cd ../frontend/client
 npm install
 ``` 
-**6. Run client**
+**8. Run client**
 ```
 npm run dev
 ``` 
